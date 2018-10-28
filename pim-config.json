@@ -1,0 +1,33 @@
+{
+  "ui":{
+    "width":"220px",
+    "height":"280px",
+    "x":"-250px",
+    "y":"30px",
+    "x_resizable":true,
+    "y_resizable":true,
+    "alwaysOnTop":true,
+    "fullScreen":false,
+    "alert_color":"#FAA"
+  },
+  "file":{
+    "encoding":"utf-8",
+    "src":"tmps/${year}_file.txt",
+	"linux_grep_src":"tmps/${year}_linux.txt"
+  },
+  "title":"${filename}",
+  "text":{
+    "background":"#FFF",
+    "foreground":"#a00",
+    "selectbackground":"#bc2f2d",
+    "selectforeground":"#FFF",
+    "font":"宋体",
+    "borderwidth":0
+  },
+  "command_line":"like text",
+  "font":{
+    "size":"14px",
+    "italic":false,
+    "bold":true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "ui":{
+    "width":"190px",
+    "height":"250px",
+    "x":"-220px",
+    "y":"20px",
+    "x_resizable":true,
+    "y_resizable":true,
+    "alwaysOnTop":true,
+    "fullScreen":false
+  },
+  "file":{
+    "encoding":"utf-8",
+    "src":"./${year}_file.txt"
+  },
+  "title":"${filename}",
+  "text":{
+    "background":"#FFF",
+    "foreground":"#000",
+    "selectbackground":"#ccc",
+    "selectforeground":"#000",
+    "font":"微软雅黑",
+    "borderwidth":0
+  },
+  "command_line":"like text"
+}
