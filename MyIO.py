@@ -110,7 +110,7 @@ class MyIO:
             tmp = "[" + tmp[:len(tmp) - 1] + "]"
             tmp = json.loads(tmp)
             for each in tmp:
-                if each["time"]==date_str:
+                if each["time"].find(date_str)!=-1:
                     ans += each["text"]+"\n"
 
         return ans
@@ -153,4 +153,6 @@ class MyIO:
 
 
 if __name__=="__main__":
-    print(MyIO.getTree("G:\\test"))
+    # print(MyIO.getTree("G:\\test"))
+    import Plus.Interface
+    Plus.Interface.Runcmd()

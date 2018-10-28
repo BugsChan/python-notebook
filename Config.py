@@ -165,6 +165,10 @@ class Config:
         res = Config.getFile()["linux_grep_src"]
         return MyTime.dump(res)
 
+    @staticmethod
+    def getIntroSrc():
+        return Config.getFile()["intro_src"]
+
 if __name__=="__main__":
     ans=Config.getSrc()
     print(ans)

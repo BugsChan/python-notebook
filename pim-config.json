@@ -13,7 +13,8 @@
   "file":{
     "encoding":"utf-8",
     "src":"tmps/${year}_file.txt",
-	"linux_grep_src":"tmps/${year}_linux.txt"
+	"linux_grep_src":"tmps/${year}_linux.txt",
+    "intro_src":"tmps/introduction.txt"
   },
   "title":"${filename}",
   "text":{
