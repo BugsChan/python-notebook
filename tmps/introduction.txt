@@ -1,0 +1,104 @@
+使用说明(1)-配置文件
+    {
+      "ui":{
+        "width":"190px",/*初始宽度*/
+        "height":"250px",/*初始高度*/
+        "x":"-220px",/*初始水平位置*/
+        "y":"20px",/*初始纵坐标*/
+        "x_resizable":true,/*x方向上的可延展性*/
+        "y_resizable":true,/*y方向上的可延展性*/
+        "alwaysOnTop":true,/*永远置顶*/
+        "fullScreen":false,/*默认全屏*/
+        "alert_color":"#FAA"/*警告颜色*/
+      },
+      "file":{
+        "encoding":"utf-8",/*编码方式*/
+        "src":"tmps/${year}_file.txt",/*默认缓存位置*/
+        "linux_grep_src":"tmps/${year}_linux.txt",/*该文件方便在Linux系统中grep*/
+        "intro_src":"tmps/introduction.txt"/*说明书*/
+      },
+      "title":"${year}-${month}-${day}",/*标题*/
+      "text":{/*输入的字体*/
+        "background":"#FFF",
+        "foreground":"#000",
+        "selectbackground":"#ccc",/*选择后的颜色*/
+        "selectforeground":"#000",
+        "font":"微软雅黑",
+        "borderwidth":0
+      },
+      "command_line":"like text",/*命令行字体*/
+      "font":{
+        "size":"13px",/*字体大小,仅允许用px为单位*/
+        "italic":false,/*是否斜体*/
+        "bold":false/*是否粗体*/
+      }
+    }
+
+使用说明(2)-命令
+	该软件的使用方法类似于vim,i键进入编辑模式,ESC键进入命令模式
+	
+    a)处理文件
+        vim
+            vim auto
+                -进入自动编辑模式 ,此时编辑的内容将会被存入固定缓存 (默认为此模式)
+            vim 文件路径
+                -如文件存在 ,则加载改文件
+                -如文件不存在,仍进入编辑模式
+        cd
+            cd 文件夹路径
+                -进入此文件夹
+        :q!
+            退出编辑,但不保存
+        :wq
+            保存并退出
+        rm
+            rm 文件名
+                -删除该文件或文件夹
+        mkdir
+            mkdir 文件夹名
+                -创建一个文件夹
+
+    b)查询文件
+        grep (find)
+            grep 关键字
+                -在当前文件中查询
+        date (time)
+            date 日期
+                -查询该日期中写入的内容
+        ls
+            ls 目录
+                -获取该目录下的文件结构
+            ls
+                -获取当前目录下的文件结构
+
+    c)优化文件
+	delrepeat
+	    为固定缓存文件去重
+	json2txt
+	    将缓存文件转化为txt并写入到linux_grep_src路径下,以方便用其他软件查看
+
+    d)UI
+        top
+            top
+                -置顶
+            top false
+                -取消置顶
+        fullscreen
+            类似于top,用于控制全屏
+
+使用说明(3)-插件开发
+    1.将插件放入plus文件夹中即可使用,插件后缀名为 *.py
+    2.插件格式如下:
+        
+        from Linsteners import Listeners
+        class Run:
+            commands=[]#这个数组中用来放置该插件的命令
+            @staticmethod
+            def run(command,arg0,arg1):
+                #TODO
+                #command:用户输入的命令
+                #arg0:第一个参数
+                #arg1:第二个参数
+
+        其中,Listeners.putInput(str)来将字符串插入窗口(textarea)中
+
