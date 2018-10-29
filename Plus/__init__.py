@@ -1,6 +1,6 @@
 import os
 
-print("----go------")
+print("Plus init")
 
 all=[]
 path="Plus/"
