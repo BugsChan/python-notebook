@@ -9,7 +9,7 @@ class Run:
         if "q" in arg1:
             if "w" in arg1:
                 my_io = MyIO()
-                wText = Listeners.getInstance().text.get("0.0", "end")
+                wText = Listeners.getInput()
                 if my_io.filePath == Config.getSrc():
                     my_io.write_for_linux(wText)
                     wText = my_io.to_json(wText) + ","

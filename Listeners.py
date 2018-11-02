@@ -52,6 +52,10 @@ class Listeners:
         return command, arg1, arg2
 
     @staticmethod
+    def getInput():
+        return Listeners.getInstance().text.get("0.0", "end")
+
+    @staticmethod
     def putInput(input_str):
         textObj = Listeners.getInstance().text
         textObj.delete("1.0", "end")
