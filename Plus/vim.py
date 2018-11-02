@@ -20,7 +20,10 @@ class Run:
                 MyIO().filePath += arg1
             else:
                 MyIO().filePath += "\\" + arg1
-            Listeners.getInstance().attention = "--INSERT IN " + MyIO.getInstance().filePath + "--"
+            if MyIO.isDictionary():
+                Listeners.getInstance().attention = "--DIR " + MyIO.getInstance().filePath + "--"
+            else:
+                Listeners.getInstance().attention = "--INSERT IN " + MyIO.getInstance().filePath + "--"
             title = Config.getTitle(False)
             title = title.replace("${filename}", arg1)
             Listeners.getInstance().root.title()
