@@ -11,4 +11,10 @@ class Run:
             Listeners.getInstance().entry["background"] = Config.getUI()["alert_color"]
             return;
         else:
-            Listeners.putInput(MyIO.getInstance().getByDate(arg1))
+            ans=""
+            tmp=MyIO.getInstance().readObj()
+            for each in tmp:
+                if each["time"].find(arg1) != -1:
+                    ans += each["text"] + "\n"
+
+            Listeners.putInput(ans)

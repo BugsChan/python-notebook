@@ -34,7 +34,11 @@ class Listeners:
         arg2=None
         if text.startswith(":") or text.startswith("："):
             command=":"
-            arg1=text[1:]
+            if " " in text:
+                arg1=text[1:text.find(" ")]
+                arg2=text[text.find(" ")+1:]
+            else:
+                arg1=text[1:]
         else:
             res=text.split(" ")
             if len(res)>=3:

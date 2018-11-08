@@ -2,6 +2,23 @@ from Config import Config
 from MyIO import MyIO
 from Listeners import Listeners
 
+
+def grep(self, words, path=False):
+    if not path:
+        path = self.filePath
+
+    ans = ""
+    if Config.getSrc() != self.filePath:
+        for each in self.read():
+            if each.find(words) != -1:
+                ans += each
+    else:
+        for each in self.readObj():
+            if each["text"].find(words) != -1:
+                ans += each["text"]
+
+    return ans
+
 class Run:
     commands=["grep","find"]
 
@@ -19,4 +36,4 @@ class Run:
             Listeners.getInstance().entry["background"] = Config.getUI()["alert_color"]
             return;
         else:
-            Listeners.putInput(MyIO.getInstance().grep(words, filePath))
+            Listeners.putInput(grep(MyIO.getInstance(),words, filePath))

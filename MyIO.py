@@ -5,6 +5,7 @@ import os
 
 class MyIO:
     filePath=None
+    _alltitles=None
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls,"_instance"):
@@ -46,7 +47,7 @@ class MyIO:
     @staticmethod
     def getTree(path=False):
         path=MyIO.getDictionary(path)
-        ans=path+"\nname\ttype\n"
+        ans=path+"\nNAME\tTYPE\n"
         for each in os.listdir(path):
             tmp=str(each)
             if MyIO.isDictionary(path+"\\"+each):
@@ -57,9 +58,9 @@ class MyIO:
 
         return ans
 
-    def write(self,text):
-        type=Config.getSrc()==self.filePath
-        if type:
+    def write(self,text,append=True):
+        type=None
+        if append:
             type="a"
         else:
             type="w"
@@ -68,51 +69,38 @@ class MyIO:
         with open(self.filePath,type,encoding=encoding) as file:
             file.write(text)
 
-    def to_json(self,text):
-        ans={"time":MyTime.toString(),"text":text}
+    def to_json(self,title,text):
+        ans={"time":MyTime.toString(),"title":title,"text":text}
         return json.dumps(ans)
 
-    def read(self):
+    def read(self,path=False):
+        if not path:
+            path=self.filePath
+
         ans=""
         with open(self.filePath,"r",encoding=Config.getFile()["encoding"]) as file:
             for each in file:
                 ans+=each
         return ans
 
-    def grep(self,words,path=False):
-        if not path:
-            path=self.filePath
+    def readObj(self):
+        tmp = self.read()
+        tmp = "[" + tmp[:len(tmp) - 1] + "]"
+        tmp = json.loads(tmp)
+        return tmp
 
-        ans=""
-        with open(path,"r",encoding=Config.getFile()["encoding"]) as file:
-            if Config.getSrc()!=self.filePath:
-                for each in file:
-                    if each.find(words)!=-1:
-                        ans+=each
-            else:
-                tmp=""
-                for each in file:
-                    tmp+=each
-                tmp="["+tmp[:len(tmp)-1]+"]"
-                tmp=json.loads(tmp)
-                for each in tmp:
-                    if each["text"].find(words)!=-1:
-                        ans+=each["text"]
+    def alltitles(self):
+        if self._alltitles!=None:
+            return self._alltitles
+        ans={}
+        tmp = self.read()
+        tmp = "[" + tmp[:len(tmp) - 1] + "]"
+        tmp = json.loads(tmp)
+        for each in tmp:
+            if each["title"]!=None:
+                ans[each["title"]]=each["time"]
 
-        return ans
-
-    def getByDate(self,date_str):
-        ans=""
-        with open(self.filePath,"r") as file:
-            tmp = ""
-            for each in file:
-                tmp += each
-            tmp = "[" + tmp[:len(tmp) - 1] + "]"
-            tmp = json.loads(tmp)
-            for each in tmp:
-                if each["time"].find(date_str)!=-1:
-                    ans += each["text"]+"\n"
-
+        self.alltitles=ans
         return ans
 
     @staticmethod
