@@ -5,6 +5,10 @@ class Run:
 
     @staticmethod
     def run(command,arg1,arg2):
+        if arg1=='bytitle' or arg1=='t':
+            from Plus.rmBytitle import Run
+            Run.run(None,arg2,None)
+            return False
         try:
             MyIO.rm(arg1)
         except:

@@ -100,7 +100,7 @@ class MyIO:
             if each["title"]!=None:
                 ans[each["title"]]=each["time"]
 
-        self.alltitles=ans
+        self._alltitles=ans
         return ans
 
     @staticmethod
