@@ -6,6 +6,18 @@ import os
 class Run:
     commands=["vi","vim","cd"]
 
+    introduction="""
+    vi/vim
+    vi/vim auto
+        -进入自动编辑模式 ,此时编辑的内容将会被存入固定缓存 (默认为此模式)
+    vi/vim 文件路径
+        -如文件存在 ,则加载改文件
+        -如文件不存在,仍进入编辑模式
+    cd
+    cd 文件夹路径
+        -进入此文件夹
+    """
+
     @staticmethod
     def run(command,arg1,arg2):
         if arg1 != "auto":

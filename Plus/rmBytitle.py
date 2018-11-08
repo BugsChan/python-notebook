@@ -4,6 +4,7 @@ import json
 
 class Run:
     commands=["titlerm"]
+    introduction="删除title"
 
     @staticmethod
     def run(cmd,arg1,arg2):

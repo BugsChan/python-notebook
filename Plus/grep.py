@@ -21,6 +21,12 @@ def grep(self, words, path=False):
 
 class Run:
     commands=["grep","find"]
+    introduction="""
+    grep (find)
+        grep 关键字
+            -在当前文件中查询
+    """
+
 
     @staticmethod
     def run(command,arg1,arg2):

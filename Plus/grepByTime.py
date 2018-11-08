@@ -4,6 +4,12 @@ from Config import Config
 
 class Run:
     commands=["time","date"]
+    introduction="""
+    date (time)
+        date 日期
+            -查询该日期中写入的内容
+    """
+
 
     @staticmethod
     def run(command,arg1,arg2):

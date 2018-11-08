@@ -35,10 +35,28 @@ class Runcmd:
 
 class Run:
     commands=["man"]
+    introduction="""
+    man
+        获取说明书
+    man 命令
+        获取单个命令的说明
+    """
     @staticmethod
     def run(command,arg1,arg2):
-        intro=""
-        with open(Config.getIntroSrc(),"r",encoding=Config.getFile()["encoding"]) as file:
-            for each in file:
-                intro+=each
-        Listeners.putInput(intro)
+        if arg1==None:
+            intro=""
+            with open(Config.getIntroSrc(),"r",encoding=Config.getFile()["encoding"]) as file:
+                for each in file:
+                    intro+=each
+            Listeners.putInput(intro)
+        elif arg1 in Runcmd().cmds:
+            use=Runcmd().cmds[arg1]
+            print("goooo")
+            obj = __import__("Plus." + use, fromlist=True)
+            intro=None
+            if hasattr(obj.Run,"introduction"):
+                intro=obj.Run.introduction
+            else:
+                intro="Sorry,没有关于这个命令的介绍"
+
+            Listeners.putInput(intro)

@@ -6,6 +6,16 @@ import json
 
 class Run:
     commands=[":","：","quit"]
+
+    introduction="""
+    :q!
+        退出编辑,但不保存
+    :wq
+        保存并退出
+    :wq title
+        将内容保存在title下并退出
+    """
+
     @staticmethod
     def run(command,arg1,arg2):
         if "q" in arg1:

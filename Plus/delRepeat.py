@@ -44,6 +44,7 @@ def delrepeat():
 
 class Run:
     commands=["delrepeat"]
+    introduction="""去重,即将重复的写入(title也要一样才算重复)去掉"""
 
     @staticmethod
     def run(command,arg0,arg1):

@@ -30,6 +30,7 @@ def json2txt():
 
 class Run:
     commands=["json2txt"]
+    introduction="将缓存文件写入linux缓存文件中方便在linux系统中用grep命令查看"
 
     @staticmethod
     def run(command,arg0,arg1):

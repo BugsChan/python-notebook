@@ -15,6 +15,12 @@ def grepByTitle(self, title):
 
 class Run:
     commands=["title","alltitles"]
+    introduction="""
+    title title
+        根据title查找写入的内容
+    alltitles
+        查找所有的title
+    """
 
     @staticmethod
     def run(cmd,arg1,arg2):

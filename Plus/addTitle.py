@@ -3,6 +3,9 @@ import json
 
 class Run:
     commands=["addtitle"]
+    introduction="""
+    该命令用于将旧版缓存文件(没有title属相)转化为新版缓存,title默认写入为None
+    """
 
     @staticmethod
     def run(*cmds):
