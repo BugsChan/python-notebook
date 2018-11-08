@@ -11,6 +11,7 @@ conf={
 import json
 import hashlib
 import re
+from MyIO import MyIO
 
 if __name__!="__main__":
     from Config import Config
@@ -19,17 +20,14 @@ if __name__!="__main__":
     conf["encoding"]=Config.getFile()["encoding"]
 
 def delrepeat():
-    tmp=""
     h_cache=[]
     cache=[]
-    with open(conf["from"],"r",encoding=conf["encoding"]) as in_file:
-        for each in in_file:
-            tmp+=each
-        tmp="["+tmp[:len(tmp)-1]+"]"
-        tmp=json.loads(tmp)
+    tmp=MyIO.getInstance().readObj()
 
     for each in tmp:
         mtest=each["text"]
+        if "title" in each:
+            mtest+=each["title"]
         mtest=re.sub("\n+$","",mtest)
         hashCode=hashlib.sha256(mtest.encode("UTF-8")).hexdigest()
         if hashCode in h_cache:
@@ -42,8 +40,7 @@ def delrepeat():
     my_json=json.dumps(cache)
     my_json=my_json[1:len(my_json)-1]+","
 
-    with open(conf["to"],"w",encoding=conf["encoding"]) as file:
-        file.write(my_json)
+    MyIO.getInstance().write(my_json,False)
 
 class Run:
     commands=["delrepeat"]
