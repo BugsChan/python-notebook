@@ -51,6 +51,7 @@ class ui:
         self.text.bind("<FocusIn>", Listeners.input_focus)
         self.text.bind("<Escape>",Listeners.command_mod)
         self.entry.bind("<FocusIn>",Listeners.command_focus)
+        self.entry.bind("<Key-Tab>",Listeners.command_tab)
 
         self.root.mainloop()
 

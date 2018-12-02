@@ -105,6 +105,12 @@ class Listeners:
         entry = Listeners.getInstance().entry
         entry.delete(0, END)
 
+    @staticmethod
+    def command_tab(arg):
+        #补全算法
+        print("Listeners.py 111行需要添加补全算法...")
+        return False
+
 
 
                 
