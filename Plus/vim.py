@@ -44,3 +44,33 @@ class Run:
         else:
             Listeners.getInstance().attention = "--INSERT--"
             MyIO().filePath = Config.getSrc()
+
+    @staticmethod
+    def complete(cmd,arg1,arg2):
+        path=MyIO.getDictionary()
+        uncompleted=None
+        def splite(path):
+            tmp = path.rfind("\\")
+            if tmp==len(path):
+                return getParent(path[:len(path)-1])
+            if tmp<0:
+                tmp=path.rfind("/")
+            elif path.rfind('/')>tmp:
+                tmp=path.rfind("/")
+            if tmp<0:
+                return "ERROR FILEPATH"
+            return path[:tmp+1],path[tmp+1:]
+
+        if arg1.startswith(".."):
+            arg1=arg1[3:]
+            path,uncompleted=splite(path)
+        elif arg1.find(":")!=-1:
+            path=arg1
+            path,uncompleted=splite(path)
+        else:
+            uncompleted=path
+            path=""
+        for each in os.listdir(path):
+            if each.find(uncompleted)==0:
+                return path+each
+        return False

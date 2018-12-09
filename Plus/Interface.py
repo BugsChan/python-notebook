@@ -45,7 +45,11 @@ class Runcmd:
                 use=self.cmds[cmd]
                 obj=__import__("Plus."+use,fromlist=True)
                 if hasattr(obj.Run,"complete"):
-                    return cmd+" "+obj.Run.complete(cmd,arg1,arg2)
+                    tmp=obj.Run.complete(cmd,arg1,arg2)
+                    if not tmp:
+                        return False
+                    else:
+                        return cmd+" "+tmp
                 else:
                     return False
             else:
