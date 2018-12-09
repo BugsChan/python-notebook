@@ -32,6 +32,25 @@ class Runcmd:
         else:
             return False
 
+    def conplement(self,cmd,arg1,arg2):
+        if not cmd:
+            return False
+        elif not arg1:
+            for each in self.cmds:
+                if each.find(cmd)==0:
+                    return each
+            return False
+        else:
+            if cmd in self.cmds:
+                use=self.cmds[cmd]
+                obj=__import__("Plus."+use,fromlist=True)
+                if hasattr(obj.Run,"complete"):
+                    return cmd+" "+obj.Run.complete(cmd,arg1,arg2)
+                else:
+                    return False
+            else:
+                return False
+
 
 class Run:
     commands=["man"]
@@ -51,7 +70,6 @@ class Run:
             Listeners.putInput(intro)
         elif arg1 in Runcmd().cmds:
             use=Runcmd().cmds[arg1]
-            print("goooo")
             obj = __import__("Plus." + use, fromlist=True)
             intro=None
             if hasattr(obj.Run,"introduction"):

@@ -17,3 +17,11 @@ class Run:
             root.attributes('-topmost', True)
         else:
             root.attributes('-topmost', False)
+
+    @staticmethod
+    def complete(cmd,arg1,arg2):
+        arg1=arg1.lower()
+        if "true".find(arg1)==0:
+            return "-true"
+        else:
+            return "-false"

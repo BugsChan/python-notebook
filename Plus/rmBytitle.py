@@ -22,3 +22,12 @@ class Run:
             MyIO().write(text,False)
             if MyIO()._alltitles!=None:
                 del MyIO()._alltitles[arg1]
+
+    @staticmethod
+    def complete(cmd,arg1,arg2):
+        titles = MyIO.getInstance().alltitles()
+        for each in titles:
+            if each.find(arg1) == 0:
+                return each
+
+        return ""

@@ -106,10 +106,17 @@ class Listeners:
         entry.delete(0, END)
 
     @staticmethod
-    def command_tab(arg):
+    def conplement(arg):
         #补全算法
-        print("Listeners.py 111行需要添加补全算法...")
-        return False
+        entry=Listeners().entry
+        text = entry.get()
+        command, arg1, arg2 = Listeners.getCommand(text)
+        import Plus.Interface
+        ans=Plus.Interface.Runcmd().conplement(command, arg1, arg2)
+        if ans!=False and ans!=text:
+            entry.delete(0,END)
+            entry.insert(0,ans)
+            entry.icursor(len(ans))
 
 
 

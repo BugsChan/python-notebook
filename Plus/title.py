@@ -33,3 +33,15 @@ class Run:
         elif arg1!=None:
             Listeners.putInput(grepByTitle(MyIO.getInstance(),arg1))
 
+    @staticmethod
+    def complete(cmd,arg1,arg2):
+        if cmd=="alltitles":
+            return False
+        else:
+            titles=MyIO.getInstance().alltitles()
+            for each in titles:
+                if each.find(arg1)==0:
+                    return each
+
+            return ""
+
