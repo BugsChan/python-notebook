@@ -61,16 +61,26 @@ class Run:
                 return "ERROR FILEPATH"
             return path[:tmp+1],path[tmp+1:]
 
-        if arg1.startswith(".."):
-            arg1=arg1[3:]
-            path,uncompleted=splite(path)
+        if arg1.startswith("./"):
+            uncompleted=arg1[2:]
+        elif arg1.startswith("../"):
+            path=splite(path)
+            uncompleted=arg1[3:]
         elif arg1.find(":")!=-1:
-            path=arg1
-            path,uncompleted=splite(path)
+            path,uncompleted=splite(arg1)
         else:
-            uncompleted=path
-            path=""
+            uncompleted=arg1
+        ansArr=[]
+        print("path:"+path)
         for each in os.listdir(path):
             if each.find(uncompleted)==0:
-                return path+each
-        return False
+                ansArr.append(each)
+
+        tmp = Listeners.getSame(ansArr)
+        if not tmp:
+            return False
+        else:
+            if splite(arg1)=="ERROR FILEPATH":
+                return tmp
+            else:
+                return splite(arg1)[0]+tmp

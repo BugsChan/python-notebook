@@ -118,6 +118,28 @@ class Listeners:
             entry.insert(0,ans)
             entry.icursor(len(ans))
 
+    @staticmethod
+    def getSame(arr):
+        if len(arr) == 1:
+            return arr[0]
+        elif len(arr) == 0:
+            return False
+        else:
+            tmp1 = arr.pop()
+            tmp2 = arr.pop()
+            if tmp1==tmp2:
+                arr.append(tmp1)
+                return Listeners.getSame(arr)
+            length = len(tmp1)
+            if len(tmp2) < length:
+                length = len(tmp2)
+            for each in range(length):
+                if tmp1[each] != tmp2[each]:
+                    arr.append(tmp1[:each])
+                    return Listeners.getSame(arr)
+            arr.append(tmp1[:each+1])
+            return Listeners.getSame(arr)
 
 
-                
+if __name__=="__main__":
+    print(Listeners.getSame(["alltitles","a"]))

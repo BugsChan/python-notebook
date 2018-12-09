@@ -36,10 +36,11 @@ class Runcmd:
         if not cmd:
             return False
         elif not arg1:
+            canBeUsed = []
             for each in self.cmds:
                 if each.find(cmd)==0:
-                    return each
-            return False
+                    canBeUsed.append(each)
+            return Listeners.getSame(canBeUsed)
         else:
             if cmd in self.cmds:
                 use=self.cmds[cmd]

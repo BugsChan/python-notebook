@@ -35,13 +35,14 @@ class Run:
 
     @staticmethod
     def complete(cmd,arg1,arg2):
+        titlelist=[]
         if cmd=="alltitles":
             return False
         else:
             titles=MyIO.getInstance().alltitles()
             for each in titles:
                 if each.find(arg1)==0:
-                    return each
+                    titlelist.append(each)
 
-            return ""
+            return Listeners.getSame(titlelist)
 

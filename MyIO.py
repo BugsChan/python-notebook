@@ -141,6 +141,5 @@ class MyIO:
 
 
 if __name__=="__main__":
-    # print(MyIO.getTree("G:\\test"))
-    import Plus.Interface
-    Plus.Interface.Runcmd()
+    print(MyIO.isDictionary("h:"))
+    print(MyIO.getDictionary("../tmps/2018_file.txt"))
