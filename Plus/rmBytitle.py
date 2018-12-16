@@ -3,7 +3,7 @@ from Listeners import Listeners
 import json
 
 class Run:
-    commands=["titlerm"]
+    commands=["titlerm","rmByTitle"]
     introduction="删除title"
 
     @staticmethod
@@ -24,10 +24,14 @@ class Run:
                 del MyIO()._alltitles[arg1]
 
     @staticmethod
-    def complete(cmd,arg1,arg2):
-        titles = MyIO.getInstance().alltitles()
-        for each in titles:
-            if each.find(arg1) == 0:
-                return each
+    def complete(cmd, arg1, arg2):
+        titlelist = []
+        if cmd == "alltitles":
+            return False
+        else:
+            titles = MyIO.getInstance().alltitles()
+            for each in titles:
+                if each.find(arg1) == 0:
+                    titlelist.append(each)
 
-        return ""
+            return Listeners.getSame(titlelist)
