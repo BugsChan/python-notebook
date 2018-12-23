@@ -45,16 +45,43 @@ class MyIO:
             return absPath[:absPath.rfind("\\")]
 
     @staticmethod
-    def getTree(path=False):
+    def getTree(path=False,deepth=False):
         path=MyIO.getDictionary(path)
         ans=path+"\nNAME\tTYPE\n"
-        for each in os.listdir(path):
-            tmp=str(each)
-            if MyIO.isDictionary(path+"\\"+each):
-                tmp+="\tdir\n"
-            else:
-                tmp+="\tfile\n"
-            ans+=tmp
+        if not deepth:
+            for each in os.listdir(path):
+                tmp=str(each)
+                if MyIO.isDictionary(path+"\\"+each):
+                    tmp+="\tdir\n"
+                else:
+                    tmp+="\tfile\n"
+                ans+=tmp
+        else:
+            space='   |'
+            ans=""
+            tmp_path=None
+            def toPathName(mpath):
+                if mpath==path:
+                    return "",mpath
+                pathname=mpath[len(path):]
+                if pathname.startswith('\\'):
+                    pathname=pathname[1:]
+
+                if pathname.find("\\")==-1:
+                    return space,pathname
+                else:
+                    tmp=pathname.find("\\")
+                    ans=space
+                    while(tmp!=-1):
+                        ans+=space
+                        tmp=pathname.find("\\",tmp+1)
+                    return ans,mpath[mpath.rfind("\\")+1:]
+
+            for mpath,dirs,files in os.walk(path):
+                mspace,pathname=toPathName(mpath)
+                ans+=mspace+'|\n'+mspace+'+'+pathname+'\n'+mspace+space+'|\n'
+                for each in files:
+                    ans+=mspace+space+'+'+each+'\n'
 
         return ans
 

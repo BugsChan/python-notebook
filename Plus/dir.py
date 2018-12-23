@@ -2,7 +2,7 @@ from MyIO import MyIO
 from Listeners import Listeners
 
 class Run:
-    commands=["ls","dir"]
+    commands=["ls","dir","tree"]
     introduction="""
     ls
         ls 目录
@@ -17,4 +17,4 @@ class Run:
         filePath = arg1
         if filePath == None:
             filePath = MyIO.getInstance().filePath
-        Listeners.putInput(MyIO.getTree(filePath))
+        Listeners.putInput(MyIO.getTree(filePath,command=="tree"))

@@ -64,14 +64,14 @@ class Run:
         if arg1.startswith("./"):
             uncompleted=arg1[2:]
         elif arg1.startswith("../"):
-            path=splite(path)
+            path=splite(path)[0]
             uncompleted=arg1[3:]
-        elif arg1.find(":")!=-1:
+        elif arg1.find(":")!=-1 or arg1.find("/")!=-1:
             path,uncompleted=splite(arg1)
         else:
             uncompleted=arg1
+
         ansArr=[]
-        print("path:"+path)
         for each in os.listdir(path):
             if each.find(uncompleted)==0:
                 ansArr.append(each)
