@@ -1,0 +1,6 @@
+*.exe
+venv/
+*.txt
+.idea/
+__pycache__/
+tmps/
