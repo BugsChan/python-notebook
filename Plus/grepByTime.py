@@ -22,6 +22,6 @@ class Run:
             gapLine=Config.getUI()["gapline"]
             for each in tmp:
                 if each["time"].find(arg1) != -1:
-                    ans += each["text"] + gapLine
+                    ans += gapLine.replace("${time}",each["time"]) + each["text"]
 
             Listeners.putInput(ans)

@@ -17,7 +17,7 @@ def grep(myio, words, path=False):
 
         for each in myio.readObj():
             if each["text"].find(words) != -1:
-                ans += each["text"]+gapline
+                ans += gapline.replace("${time}",each["time"]) + each["text"]
 
     return ans
 
