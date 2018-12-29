@@ -3,19 +3,21 @@ from MyIO import MyIO
 from Listeners import Listeners
 
 
-def grep(self, words, path=False):
+def grep(myio, words, path=False):
     if not path:
-        path = self.filePath
+        path = myio.filePath
 
     ans = ""
-    if Config.getSrc() != self.filePath:
-        for each in self.read():
+    if Config.getSrc() != myio.filePath:
+        for each in myio.read():
             if each.find(words) != -1:
                 ans += each
     else:
-        for each in self.readObj():
+        gapline=Config.getUI()["gapline"]
+
+        for each in myio.readObj():
             if each["text"].find(words) != -1:
-                ans += each["text"]
+                ans += each["text"]+gapline
 
     return ans
 

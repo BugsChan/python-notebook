@@ -8,7 +8,8 @@
     "y_resizable":true,
     "alwaysOnTop":true,
     "fullScreen":false,
-    "alert_color":"#FAA"
+    "alert_color":"#FAA",
+    "gapline":"\n==============\n"
   },
   "file":{
     "encoding":"utf-8",

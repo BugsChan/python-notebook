@@ -19,8 +19,9 @@ class Run:
         else:
             ans=""
             tmp=MyIO.getInstance().readObj()
+            gapLine=Config.getUI()["gapline"]
             for each in tmp:
                 if each["time"].find(arg1) != -1:
-                    ans += each["text"] + "\n"
+                    ans += each["text"] + gapLine
 
             Listeners.putInput(ans)
