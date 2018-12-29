@@ -31,8 +31,15 @@ class ui:
         self.entry=Entry(self.root,entryOption)
         self.entry.pack(fill="x",side="bottom")
 
+        # 滚动条
+        if Config.getUI()["scrollbar"]:
+            scrollbar = Scrollbar(self.root)
+            scrollbar.pack(side="right", fill="y")
+
         self.text=Text(self.root,textOption)
         self.text.pack(fill="both",expand="yes")
+        if Config.getUI()["scrollbar"]:
+            scrollbar.config(command=self.text.yview)
 
         font_conf=Config.getInputConf()["font"]
         font_conf+=" "+Config.getLength(Config.getFontStyle()["size"],True)
@@ -40,7 +47,7 @@ class ui:
             font_conf+=" bold"
         if Config.getFontStyle()["italic"]:
             font_conf+=" italic"
-        print(font_conf)
+
         self.text.config(font=font_conf)
         self.entry.config(font=font_conf)
 

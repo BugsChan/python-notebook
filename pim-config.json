@@ -9,7 +9,8 @@
     "alwaysOnTop":true,
     "fullScreen":false,
     "alert_color":"#FAA",
-    "gapline":"\n=======${time}=======\n"
+    "gapline":"\n=======${time}=======\n",
+    "scrollbar":true
   },
   "file":{
     "encoding":"utf-8",
