@@ -27,7 +27,9 @@ class Listeners:
         return Listeners()
 
     @staticmethod
-    def getCommand(text):
+    def getCommand(text=False):
+        if not text:
+            text=Listeners.getInstance().entry.get()
         text=re.sub(" +"," ",text)
         command=None
         arg1=None
@@ -37,7 +39,7 @@ class Listeners:
             if " " in text:
                 arg1=text[1:text.find(" ")]
                 arg2=text[text.find(" ")+1:]
-            else:
+            elif len(text)>=2:
                 arg1=text[1:]
         else:
             res=text.split(" ")
@@ -67,8 +69,7 @@ class Listeners:
 
     @staticmethod
     def entry_Return(arg):
-        text=Listeners.getInstance().entry.get()
-        command,arg1,arg2=Listeners.getCommand(text)
+        command,arg1,arg2=Listeners.getCommand()
         import Plus.Interface
         if not Plus.Interface.Runcmd().RunCommand(command,arg1,arg2):
             Listeners.getInstance().text.focus_set()
@@ -112,9 +113,17 @@ class Listeners:
         text = entry.get()
         command, arg1, arg2 = Listeners.getCommand(text)
         import Plus.Interface
-        ans=Plus.Interface.Runcmd().conplement(command, arg1, arg2)
+        ans=None
+        obj=Plus.Interface.Runcmd()
+        if arg.keysym=="Up":
+            ans=obj.last(command,arg1,arg2)
+        elif arg.keysym=="Down":
+            ans=obj.next(command,arg1,arg2)
+        else:
+            ans=obj.conplement(command, arg1, arg2)
         if ans!=False and ans!=text:
             entry.delete(0,END)
+            print("ans=",ans)
             entry.insert(0,ans)
             entry.icursor(len(ans))
 

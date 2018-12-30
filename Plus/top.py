@@ -25,3 +25,14 @@ class Run:
             return "-true"
         else:
             return "-false"
+
+    @staticmethod
+    def next(cmd, arg1, arg2):
+        if "t" in arg1:
+            return "-false"
+        else:
+            return "-true"
+
+    @staticmethod
+    def last(cmd, arg1, arg2):
+        return Run.next(cmd, arg1, arg2)

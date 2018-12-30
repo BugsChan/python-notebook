@@ -3,7 +3,7 @@ from Listeners import Listeners
 import json
 
 class Run:
-    commands=["titlerm","rmByTitle"]
+    commands=["titlerm","rmbytitle"]
     introduction="删除title"
 
     @staticmethod

@@ -56,6 +56,46 @@ class Runcmd:
             else:
                 return False
 
+    def next(self,cmd,arg1,arg2,mcmds=False,callBack="next"):
+        if not mcmds:
+            mcmds=list(self.cmds.keys())
+            mcmds.sort(reverse=False)
+        if not cmd:
+            return mcmds[0]
+        elif arg1==None:
+            tmp=False
+            for each in mcmds:
+                if each==cmd:
+                    tmp=True
+                elif tmp:
+                    return each
+            for each in mcmds:
+                if each.find(cmd)==0:
+                    return each
+        else:
+            if cmd in mcmds:
+                use=self.cmds[cmd]
+                obj=__import__("Plus."+use,fromlist=True)
+                if hasattr(obj.Run,callBack):
+                    mfunc=getattr(obj.Run,callBack)
+                    tmp=mfunc(cmd,arg1,arg2)
+                    if not tmp:
+                        return False
+                    else:
+                        return cmd+" "+tmp
+            return False
+
+
+
+
+    def last(self,cmd,arg1,arg2):
+        mcmds=list(self.cmds.keys())
+        mcmds.sort(reverse=True)
+        if not cmd or arg1==None:
+            return self.next(cmd,arg1,arg2,mcmds)
+        else:
+            return self.next(cmd,arg1,arg2,mcmds,"last")
+
 
 class Run:
     commands=["man"]
