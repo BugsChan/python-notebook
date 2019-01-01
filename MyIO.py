@@ -120,7 +120,11 @@ class MyIO:
         if self._alltitles!=None:
             return self._alltitles
         ans={}
-        tmp = self.read()
+        tmp = None
+        try:
+            tmp = self.read()
+        except:
+            return ans
         tmp = "[" + tmp[:len(tmp) - 1] + "]"
         tmp = json.loads(tmp)
         for each in tmp:
