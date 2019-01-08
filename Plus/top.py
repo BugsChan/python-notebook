@@ -33,6 +33,5 @@ class Run:
         else:
             return "-true"
 
-    @staticmethod
-    def last(cmd, arg1, arg2):
-        return Run.next(cmd, arg1, arg2)
+    #last is a function as same as function next
+    last=next
