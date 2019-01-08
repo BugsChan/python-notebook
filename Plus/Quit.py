@@ -5,7 +5,7 @@ from my_time import MyTime
 import json
 
 class Run:
-    commands=[":","：","quit"]
+    commands=[":","：","quit","exit"]
 
     introduction="""
     :q!
@@ -18,6 +18,9 @@ class Run:
 
     @staticmethod
     def run(command,arg1,arg2):
+        if command=="quit" or command=="exit":
+            exit()
+
         if "w" in arg1:
             my_io = MyIO()
             wText = Listeners.getInput()
