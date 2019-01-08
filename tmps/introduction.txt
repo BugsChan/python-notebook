@@ -1,4 +1,4 @@
-使用说明(1)-配置文件
+﻿使用说明(1)-配置文件
     {
       "ui":{
         "width":"190px",/*初始宽度*/
@@ -9,7 +9,9 @@
         "y_resizable":true,/*y方向上的可延展性*/
         "alwaysOnTop":true,/*永远置顶*/
         "fullScreen":false,/*默认全屏*/
-        "alert_color":"#FAA"/*警告颜色*/
+        "alert_color":"#FAA",/*警告颜色*/
+	"gapline":"\n=======${time}=======\n",/*设置多个查询结果之间的间隔*/
+    	"scrollbar":true/*设置是否有滚动条*/
       },
       "file":{
         "encoding":"utf-8",/*编码方式*/
@@ -51,6 +53,10 @@
             退出编辑,但不保存
         :wq
             保存并退出
+	:w title
+            以将记事本内的文字存储在title里面
+	title mytitle
+            查找以mytitle命名的内容
         rm
             rm 文件名
                 -删除该文件或文件夹
@@ -71,6 +77,9 @@
             ls
                 -获取当前目录下的文件结构
 
+        tree
+                -获得当前目录的树结构
+
     c)优化文件
 	delrepeat
 	    为固定缓存文件去重
@@ -86,6 +95,14 @@
         fullscreen
             类似于top,用于控制全屏
 
+    e)其它
+        man -命令
+            查询这个命令的帮助
+        man
+            查询帮助文档
+    
+    
+
 使用说明(3)-插件开发
     1.将插件放入plus文件夹中即可使用,插件后缀名为 *.py
     2.插件格式如下:
@@ -93,12 +110,26 @@
         from Linsteners import Listeners
         class Run:
             commands=[]#这个数组中用来放置该插件的命令
+            introduction="帮助文档"#将帮助文档以字符串的形式写入这个参数,可以不写
             @staticmethod
             def run(command,arg0,arg1):
-                #TODO
+                #TODO 该函数用来执行命令
                 #command:用户输入的命令
                 #arg0:第一个参数
                 #arg1:第二个参数
+			
+			@staticmethod
+			def complete(cmd, arg1, arg2):
+				#TODO 该函数用于补全参数
+				#参数类似于上一个函数
+				
+			@staticmethod
+			def next(cmd,arg1,arg2):
+				#TODO 该函数用于滚动不全参数(向下)
+
+			@staticmethod
+			def last(cmd,arg1,arg2):
+				#TODO 该函数用于滚动不全参数(向上)
 
         其中,Listeners.putInput(str)来将字符串插入窗口(textarea)中
 
