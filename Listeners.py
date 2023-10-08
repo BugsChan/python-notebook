@@ -99,8 +99,10 @@ class Listeners:
         entry=Listeners().entry
         text = entry.get()
         args = Listeners.getCommand(text)
+        tmp = None
         if args[0] in "：:":
-            args.pop(0)
+            tmp = args.pop(1)
+            print(args)
         command = args[0] if len(args) > 0 else ""
         arg1 = args[1] if len(args) > 1 else ""
         arg2 = args[2] if len(args) > 2 else ""
@@ -115,7 +117,8 @@ class Listeners:
             ans=obj.conplement(command, arg1, arg2)
         if ans!=False and ans!=text:
             entry.delete(0,END)
-            print("ans=",ans)
+            if args[0] in "：:":
+                ans = ":" + tmp + ans[1:]
             entry.insert(0,ans)
             entry.icursor(len(ans))
 
