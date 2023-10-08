@@ -31,31 +31,18 @@ class Listeners:
         if not text:
             text=Listeners.getInstance().entry.get()
         text=re.sub(" +"," ",text)
-        command=None
-        arg1=None
-        arg2=None
-        if text.startswith(":") or text.startswith("："):
-            command=":"
-            if " " in text:
-                arg1=text[1:text.find(" ")]
-                arg2=text[text.find(" ")+1:]
-            elif len(text)>=2:
-                arg1=text[1:]
-        else:
-            res=text.split(" ")
-            if len(res)>=3:
-                arg2=res[2]
-            if len(res)>=2:
-                arg1=res[1]
-            command=res[0]
+        args = text.split(" ")
 
-        command=command.lower()
-        if arg1!=None:
-            arg1=re.sub("^-*","",arg1)
-        if arg2!=None:
-            arg2=re.sub("^-*","",arg2)
+        if args[0].startswith(":") or args[0].startswith("："):
+            args.insert(0, ":")
+            args[1] = args[1][1:]
 
-        return command, arg1, arg2
+        args[0]=args[0].lower()
+
+        for i in range(len(args)):
+            args[i] = re.sub("^-*", "", args[i])
+
+        return args
 
     @staticmethod
     def getInput():
@@ -69,9 +56,9 @@ class Listeners:
 
     @staticmethod
     def entry_Return(arg):
-        command,arg1,arg2=Listeners.getCommand()
+        args=Listeners.getCommand()
         import Plus.Interface
-        if not Plus.Interface.Runcmd().RunCommand(command,arg1,arg2):
+        if not Plus.Interface.Runcmd().RunCommand(*args):
             Listeners.getInstance().text.focus_set()
 
 
@@ -111,7 +98,12 @@ class Listeners:
         #补全算法
         entry=Listeners().entry
         text = entry.get()
-        command, arg1, arg2 = Listeners.getCommand(text)
+        args = Listeners.getCommand(text)
+        if args[0] in "：:":
+            args.pop(0)
+        command = args[0] if len(args) > 0 else ""
+        arg1 = args[1] if len(args) > 1 else ""
+        arg2 = args[2] if len(args) > 2 else ""
         import Plus.Interface
         ans=None
         obj=Plus.Interface.Runcmd()

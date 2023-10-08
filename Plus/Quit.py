@@ -4,46 +4,143 @@ from MyIO import MyIO
 from my_time import MyTime
 import json
 
+from tkinter.messagebox import showerror, askquestion
+
+import base64
+from Crypto.Cipher import AES
+
+class MyCrypt:
+    ENSUREKEY = "FUCK-XI-FORBID-COMMENTS"
+    def addTo16(self, value):
+        while len(value) % 16 != 0:
+            value += '\0'
+        return str.encode(value)
+
+    def encrypt(self, key, value):
+        aes = AES.new(self.addTo16(key), AES.MODE_ECB)
+        value = self.ENSUREKEY + "|" + value
+        encryptedValue = aes.encrypt(self.addTo16(value))
+        encryptedText = str(base64.encodebytes(encryptedValue), encoding="utf-8")
+        return encryptedText
+
+    def decrypt(self, key, value):
+        aes = AES.new(self.addTo16(key), AES.MODE_ECB)
+        base64Decrypted = base64.decodebytes(value.encode(encoding="utf-8"))
+        try:
+            decryptedText = str(aes.decrypt(base64Decrypted), encoding="utf-8").replace("\0", "")
+            if decryptedText.startswith(self.ENSUREKEY):
+                return decryptedText[len(self.ENSUREKEY) + 1:]
+            else:
+                return False
+        except:
+            return False
+
 class Run:
-    commands=[":","：","quit","exit"]
+    commands=[":","：","quit","exit", "save"]
 
     introduction="""
-    :q!
-        退出编辑,但不保存
-    :wq
+    save title password
+    :w title password
+        保存内容
+        title: 标题
+        password 密码(可以省略)
+    :q 退出
+    :wq title password
         保存并退出
-    :wq title
-        将内容保存在title下并退出
+    :! 强制(用于内容未保存时的强制退出)
+
     """
 
     @staticmethod
-    def run(command,arg1,arg2):
+    def complete(cmd,arg1,arg2,loop=False):
+        titlelist=[]
+        if cmd=="alltitles":
+            return False
+        else:
+            titles=MyIO.getInstance().alltitles()
+            for each in titles:
+                if each.find(arg1)==0:
+                    titlelist.append(each)
+            if loop:
+                return list(titles.keys())
+            return Listeners.getSame(titlelist)
+
+    @staticmethod
+    def next(cmd,arg1,arg2,prev=False):
+        titlelist=Run.complete(cmd,arg1,arg2,True)
+        if len(titlelist)==0:
+            return False
+        titlelist.sort(reverse=prev)
+        if not arg1:
+            return titlelist[0]
+        else:
+            tmp=False
+            for each in titlelist:
+                if each==arg1:
+                    tmp=True
+                elif tmp:
+                    return each
+            for each in titlelist:
+                if each.find(arg1)==0:
+                    return each
+            return False
+
+    @staticmethod
+    def last(cmd,arg1,arg2):
+        return Run.next(cmd,arg1,arg2,True)
+
+    @staticmethod
+    def run(command,*args):
         if command=="quit" or command=="exit":
             exit()
 
-        if "w" in arg1:
+        if command == "save":
+            return Run.run(":", "w", *args)
+
+        if command in ":：" and "w" in args[0]:
+
             my_io = MyIO()
             wText = Listeners.getInput()
             append = False
+            encrypt = False
+
             if my_io.filePath == Config.getSrc():
-                my_io.write_for_linux(wText)
-                if arg2 == None or not arg2 in my_io.alltitles():
+                if len(args) < 2:
+                    showerror("错误", "请输入标题 (title) !")
+                    Listeners.getInstance().entry["background"] = Config.getUI()["alert_color"]
+                    return True
+                if len(args) >= 3:
+                    encrypt = True
+                    wText = MyCrypt().encrypt(args[2], wText)
+                else:
+                    my_io.write_for_linux(wText)
+
+                if not args[1] in my_io.alltitles():
                     append = True
-                    wText = my_io.to_json(arg2, wText) + ","
+                    wText = my_io.to_json(args[1], wText, encrypt) + ","
                 else:
                     tmp = my_io.readObj()
                     for each in tmp:
-                        if each['title'] == arg2:
+                        if each['title'] == args[1]:
+                            #改密或删除密码的提醒
+                            if (each["encrypt"] ^ encrypt) or ( encrypt and (not MyCrypt().decrypt(each["text"])) ):
+                                if "no" == askquestion("确定", "确定要修改密码吗?"):
+                                    return True
+                            else:
+                                if "no" == askquestion("确定", "确定要存入笔记吗?"):
+                                    return True
                             each['time'] = MyTime.toString()
                             each["text"] = wText
+                            each["encrypt"] = encrypt
+                            break
                     wText = json.dumps(tmp)
                     wText = wText[1:len(wText) - 1] + ","
 
             my_io.write(wText, append)
             Listeners.putInput("文件已写入...")
 
-        if "q" in arg1:
-            if "!" in arg1 or "！" in arg1 or "w" in arg1:  # 强制退出
+        if "q" in args[0]:
+            if "!" in args[0] or "！" in args[0] or "w" in args[0]:  # 强制退出
                 exit(0)
             else:
                 Listeners.getInstance().entry["background"] = Config.getUI()["alert_color"]

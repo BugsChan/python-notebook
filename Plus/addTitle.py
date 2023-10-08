@@ -13,6 +13,8 @@ class Run:
         for each in obj:
             if not "title" in each:
                 each["title"]=None
+            if not "encrypt" in each:
+                each["encrypt"] = False
         wText = json.dumps(obj)
         wText = wText[1:len(wText) - 1] + ","
         MyIO().write(wText,False)

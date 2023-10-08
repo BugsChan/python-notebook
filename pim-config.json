@@ -14,11 +14,11 @@
   },
   "file":{
     "encoding":"utf-8",
-    "src":"tmps/${year}_file.txt",
-	"linux_grep_src":"tmps/${year}_grep_for_linux.txt",
+    "src":"tmps/tmpfile.txt",
+	  "linux_grep_src":"NUL",
     "intro_src":"tmps/introduction.txt"
   },
-  "title":"${filename}",
+  "title":"Notebook",
   "text":{
     "background":"#FFF",
     "foreground":"#a00",

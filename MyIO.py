@@ -96,8 +96,8 @@ class MyIO:
         with open(self.filePath,type,encoding=encoding) as file:
             file.write(text)
 
-    def to_json(self,title,text):
-        ans={"time":MyTime.toString(),"title":title,"text":text}
+    def to_json(self,title,text,encrypt=False):
+        ans={"time":MyTime.toString(), "encrypt": encrypt,"title":title,"text":text}
         return json.dumps(ans)
 
     def read(self,path=False):

@@ -28,7 +28,14 @@ class Runcmd:
         if command in self.cmds:
             use=self.cmds[command]
             obj=__import__("Plus."+use,fromlist=True)
-            return obj.Run.run(command,*args)
+            try:
+                #新版api
+                return obj.Run.run(command, *args)
+            except TypeError as e:
+                #旧版api
+                return obj.Run.run(command, \
+                args[0] if len(args)>=1 else "", \
+                args[1] if len(args)>=2 else "")
         else:
             return False
 

@@ -1,8 +1,10 @@
 from Listeners import Listeners
 from MyIO import MyIO
+from Plus.Quit import MyCrypt
 
+from tkinter.messagebox import showerror
 
-def grepByTitle(self, title):
+def grepByTitle(self, title, password=False):
     ans = ""
     if title == None:
         return ans
@@ -10,11 +12,18 @@ def grepByTitle(self, title):
     for each in self.readObj():
         if each["title"] == title:
             ans += each["text"] + "\n"
-
+            if each["encrypt"]:
+                if password:
+                    ans = MyCrypt().decrypt(password, ans)
+                    if not ans:
+                        showerror("密码错误", "密码错误, 请更正! ")
+                else:
+                    ans = False
+                    showerror("密码错误", "笔记已加密, 请键入密码! ")
     return ans
 
 class Run:
-    commands=["title","alltitles"]
+    commands=["title", "read","alltitles"]
     introduction="""
     title title
         根据title查找写入的内容
@@ -31,7 +40,11 @@ class Run:
                 tmp+=each+"\t"+titles[each]+"\n"
             Listeners.putInput(tmp)
         elif arg1!=None:
-            Listeners.putInput(grepByTitle(MyIO.getInstance(),arg1))
+            ans = grepByTitle(MyIO.getInstance(),arg1, arg2)
+            if ans:
+                Listeners.putInput(ans)
+            else:
+                return True
 
     @staticmethod
     def complete(cmd,arg1,arg2,loop=False):
