@@ -13,26 +13,25 @@ class MyCrypt:
     ENSUREKEY = "FUCK-XI-FORBID-COMMENTS"
     def addTo16(self, value):
         while len(value) % 16 != 0:
-            value += '\0'
-        return str.encode(value)
+            value += bytes('\0', 'utf-8')
+        return value
 
     def encrypt(self, key, value):
-        aes = AES.new(self.addTo16(key), AES.MODE_ECB)
+        aes = AES.new(self.addTo16(bytes(key, "utf-8")), AES.MODE_ECB)
         value = self.ENSUREKEY + "|" + value
-        encryptedValue = aes.encrypt(self.addTo16(value))
-        encryptedText = str(base64.encodebytes(encryptedValue), encoding="utf-8")
-        return encryptedText
+        encryptedValue = aes.encrypt(self.addTo16(bytes(value, "utf-8")))
+        return str(base64.encodebytes(encryptedValue), encoding="utf-8")
 
     def decrypt(self, key, value):
-        aes = AES.new(self.addTo16(key), AES.MODE_ECB)
-        base64Decrypted = base64.decodebytes(value.encode(encoding="utf-8"))
+        aes = AES.new(self.addTo16(bytes(key, "utf-8")), AES.MODE_ECB)
         try:
-            decryptedText = str(aes.decrypt(base64Decrypted), encoding="utf-8").replace("\0", "")
+            decodeBytes = base64.decodebytes(bytes(value, "utf-8"))
+            decryptedText = str(aes.decrypt(decodeBytes), encoding="utf-8")
             if decryptedText.startswith(self.ENSUREKEY):
                 return decryptedText[len(self.ENSUREKEY) + 1:]
             else:
                 return False
-        except:
+        except Exception as e:
             return False
 
 class Run:
