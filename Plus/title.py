@@ -34,10 +34,10 @@ class Run:
     @staticmethod
     def run(cmd,arg1,arg2):
         if cmd=="alltitles":
-            tmp="TITLE\tTIME\n"
+            tmp="TITLE\t\tTIME\n"
             titles=MyIO.getInstance().alltitles()
             for each in titles:
-                tmp+=each+"\t"+titles[each]+"\n"
+                tmp+=each+"\t\t"+titles[each]+"\n"
             Listeners.putInput(tmp)
         elif arg1!=None:
             ans = grepByTitle(MyIO.getInstance(),arg1, arg2)
