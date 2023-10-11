@@ -98,7 +98,7 @@ class MyIO:
 
     def to_json(self,title,text,encrypt=False):
         ans={"time":MyTime.toString(), "encrypt": encrypt,"title":title,"text":text}
-        return json.dumps(ans)
+        return json.dumps(ans, ensure_ascii=False)
 
     def read(self,path=False):
         if not path:
