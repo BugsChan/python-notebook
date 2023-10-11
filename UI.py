@@ -2,12 +2,20 @@ from tkinter import *
 from Config import Config
 from Listeners import *
 
+import ctypes
+
 class ui:
     root=None
     text=None
     entry=None
     def __init__(self):
         self.root=Tk()
+
+        # 适配高分屏
+        # 暂时不用，会导致窗口大小变化、汉语输入字体大小变化
+        # ctypes.windll.shcore.SetProcessDpiAwareness(1)
+        # ScaleFactor=ctypes.windll.shcore.GetScaleFactorForDevice(0)
+        # self.root.tk.call('tk', 'scaling', ScaleFactor/75)
 
         self.root.title(Config.getTitle())
 
@@ -74,5 +82,3 @@ if __name__=='__main__':
 
     my_ui=ui()
     #my_ui.dumpTest()
-
-
