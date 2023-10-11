@@ -15,7 +15,7 @@ class Run:
                 each["title"]=None
             if not "encrypt" in each:
                 each["encrypt"] = False
-        wText = json.dumps(obj)
+        wText = json.dumps(obj, ensure_ascii=False)
         wText = wText[1:len(wText) - 1] + ","
         MyIO().write(wText,False)
 

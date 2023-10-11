@@ -132,7 +132,7 @@ class Run:
                             each["text"] = wText
                             each["encrypt"] = encrypt
                             break
-                    wText = json.dumps(tmp)
+                    wText = json.dumps(tmp, ensure_ascii=False)
                     wText = wText[1:len(wText) - 1] + ","
 
             my_io.write(wText, append)

@@ -17,7 +17,7 @@ class Run:
             for each in tmp:
                 if each["title"]==arg1:
                     tmp.remove(each)
-            text=json.dumps(tmp)
+            text=json.dumps(tmp, ensure_ascii=False)
             text=text[1:len(text)-1]+"," if len(text) > 0 else ""
             MyIO().write(text,False)
             if MyIO()._alltitles!=None:

@@ -37,7 +37,7 @@ def delrepeat():
             cache.append(each)
 
 
-    my_json=json.dumps(cache)
+    my_json=json.dumps(cache, ensure_ascii=False)
     my_json=my_json[1:len(my_json)-1]+","
 
     MyIO.getInstance().write(my_json,False)
