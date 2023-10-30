@@ -27,6 +27,29 @@ class Listeners:
         return Listeners()
 
     @staticmethod
+    def newLine(arg):
+        #TODO 换行自动对齐前一行、自动补齐数字
+        text = Listeners().text
+        cursorPosition = text.index("insert")
+        cursorPosition = cursorPosition
+        content = text.get(cursorPosition.split(".")[0] + ".0", cursorPosition)
+        head = re.search("^\s*(\d*\.)", content)
+
+        if head:
+            head = head.group()
+        else:
+            return
+        if len(head) != 0:
+            def addOne(matched):
+                return str(int(matched.group()[:-1]) + 1) + "."
+
+            newLineHead = re.sub("\d*\.", addOne, head)
+            text.insert("insert", '\n' + newLineHead)
+            return  "break"
+
+
+
+    @staticmethod
     def getCommand(text=False):
         if not text:
             text=Listeners.getInstance().entry.get()
