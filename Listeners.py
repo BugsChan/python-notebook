@@ -33,7 +33,7 @@ class Listeners:
         cursorPosition = text.index("insert")
         cursorPosition = cursorPosition
         content = text.get(cursorPosition.split(".")[0] + ".0", cursorPosition)
-        head = re.search("^\s*(\d*\.)", content)
+        head = re.search("^\s*(\d*\.)*", content)
 
         if head:
             head = head.group()
