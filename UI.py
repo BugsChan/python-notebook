@@ -67,7 +67,7 @@ class ui:
         self.text.bind("<Escape>",Listeners.command_mod)
         self.text.bind("<Key-Return>",Listeners.newLine)
         self.entry.bind("<FocusIn>",Listeners.command_focus)
-        self.entry.bind("<Key-Right>",Listeners.conplement)
+        self.entry.bind("<Tab>",Listeners.conplement)
         self.entry.bind("<Key-Up>",Listeners.conplement)
         self.entry.bind("<Key-Down>",Listeners.conplement)
 

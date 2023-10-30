@@ -144,6 +144,7 @@ class Listeners:
                 ans = ":" + tmp + ans[1:]
             entry.insert(0,ans)
             entry.icursor(len(ans))
+        return "break"
 
     @staticmethod
     def getSame(arr):
