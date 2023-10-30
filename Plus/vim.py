@@ -4,7 +4,7 @@ from Config import Config
 import os
 
 class Run:
-    commands=["vi","vim","cd"]
+    commands=["vi","vim","cd", "redirect"]
 
     introduction="""
     vi/vim
@@ -16,6 +16,9 @@ class Run:
     cd
     cd 文件夹路径
         -进入此文件夹
+
+    redirect
+        -以该软件的原生json方式写入文件，允许使用 title 和进行加密
     """
 
     @staticmethod
@@ -41,9 +44,15 @@ class Run:
             Listeners.getInstance().root.title()
             if MyIO.fileExist() and not MyIO.isDictionary():
                 Listeners.putInput(MyIO.getInstance().read())
+
+            # 使用redirect命令，将
+            if command == "redirect":
+                self.tmpPath = Config.getSrc()
+                Config.getFile()["src"] = MyIO().filePath
+
         else:
             Listeners.getInstance().attention = "--INSERT--"
-            MyIO().filePath = Config.getSrc()
+            MyIO().filePath = self.tmpPath or Config.getSrc()
 
     @staticmethod
     def complete(cmd,arg1,arg2):
