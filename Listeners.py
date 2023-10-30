@@ -136,6 +136,8 @@ class Listeners:
             ans=obj.last(command,arg1,arg2)
         elif arg.keysym=="Down":
             ans=obj.next(command,arg1,arg2)
+        elif arg1 == "":
+            ans=obj.next(command, arg1, arg2)
         else:
             ans=obj.conplement(command, arg1, arg2)
         if ans!=False and ans!=text:
