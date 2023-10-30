@@ -42,17 +42,18 @@ class Run:
             title = Config.getTitle(False)
             title = title.replace("${filename}", arg1)
             Listeners.getInstance().root.title()
-            if MyIO.fileExist() and not MyIO.isDictionary():
-                Listeners.putInput(MyIO.getInstance().read())
 
             # 使用redirect命令，将
             if command == "redirect":
-                self.tmpPath = Config.getSrc()
+                Run.tmpPath = Config.getSrc()
                 Config.getFile()["src"] = MyIO().filePath
+            elif MyIO.fileExist() and not MyIO.isDictionary():
+                Listeners.putInput(MyIO.getInstance().read())
 
         else:
             Listeners.getInstance().attention = "--INSERT--"
-            MyIO().filePath = self.tmpPath or Config.getSrc()
+            MyIO().filePath = Run.tmpPath or Config.getSrc()
+            Config.getFile()["src"] = Run.tmpPath or Config.getSrc()
 
     @staticmethod
     def complete(cmd,arg1,arg2):
