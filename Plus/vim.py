@@ -52,8 +52,8 @@ class Run:
 
         else:
             Listeners.getInstance().attention = "--INSERT--"
-            MyIO().filePath = Run.tmpPath or Config.getSrc()
-            Config.getFile()["src"] = Run.tmpPath or Config.getSrc()
+            MyIO().filePath = Run.tmpPath if hasattr(Run, "tmpPath") else Config.getSrc()
+            Config.getFile()["src"] = Run.tmpPath if hasattr(Run, "tmpPath") else Config.getSrc()
 
     @staticmethod
     def complete(cmd,arg1,arg2):
