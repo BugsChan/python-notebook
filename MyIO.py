@@ -117,8 +117,7 @@ class MyIO:
         return tmp
 
     def alltitles(self):
-        if self._alltitles!=None:
-            return self._alltitles
+
         ans={}
         tmp = None
         try:
@@ -131,7 +130,6 @@ class MyIO:
             if each["title"]!=None:
                 ans[each["title"]]=each["time"]
 
-        self._alltitles=ans
         return ans
 
     @staticmethod
