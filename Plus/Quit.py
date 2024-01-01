@@ -122,7 +122,7 @@ class Run:
                     for each in tmp:
                         if each['title'] == args[1]:
                             #改密或删除密码的提醒
-                            if (each["encrypt"] ^ encrypt) or ( encrypt and (not MyCrypt().decrypt(each["text"])) ):
+                            if (each["encrypt"] ^ encrypt) or ( encrypt and (not MyCrypt().decrypt(args[2], each["text"])) ):
                                 if "no" == askquestion("确定", "确定要修改密码吗?"):
                                     return True
                             else:
